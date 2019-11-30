@@ -1,6 +1,12 @@
 # Python (Flask with Docker) backend for a ToDo app
 
 Docker setup and some of the API structure from [here](https://www.youtube.com/watch?v=4T5Gnrmzjak)
+## Setup 
+* clone repo
+* run `docker-compose build` 
+* run `docker-compose up`
+* main entry point is `server.py`
+
 
 ## Structure of API
 
