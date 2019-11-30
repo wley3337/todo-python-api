@@ -7,6 +7,10 @@ Docker setup and some of the API structure from [here](https://www.youtube.com/w
 * run `docker-compose up`
 * main entry point is `server.py`
 
+## Dependencies: 
+* flask
+* flask_restful
+* marshmallow 
 
 ## Structure of API
 
