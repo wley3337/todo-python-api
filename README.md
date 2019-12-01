@@ -3,13 +3,27 @@
 Docker setup and some of the API structure from [here](https://www.youtube.com/watch?v=4T5Gnrmzjak)
 ## Setup 
 * clone repo
+***Create `env.py` file***
+  ```
+  import os
+  
+  os.environ["DB_DATABASE_DEV"]= "NAME_OF_YOUR_DEV_DB"
+  os.environ["DB_DATABASE_TEST"]= "NAME_OF_YOUR_TEST_DB"
+  # change for production
+  os.environ["DB_DATABASE_PROD"]= "NAME_OF_YOUR_PROD_DB"
+  ```
+***For Docker***
 * run `docker-compose build` 
 * run `docker-compose up`
 * main entry point is `server.py`
 
+***For Local DB***
+* run `python server.py`
+
 ## Dependencies: 
 * flask
 * flask_restful
+* psycopg2
 * marshmallow 
 
 ## Structure of API
