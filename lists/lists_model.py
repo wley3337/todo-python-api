@@ -1,7 +1,5 @@
 from db import db_connection
-# import datetime
-# # t = datetime.datetime(2012, 2, 23, 0, 0)
-# # t.strftime('%m/%d/%Y')
+from to_dos import to_dos_model
 
 
 def get_users_lists_by_user_id(user_id):
@@ -21,6 +19,7 @@ def get_users_lists_by_user_id(user_id):
 
 
 def serialize_list(list):
-    """shape: {'id': 7, 'user_id': 1, 'heading': 'New list 3', 'display_order': 0, 'created_at': '2019-11-19T16:08:10.440681', 'updated_at': '2019-11-19T16:08:10.440681'}"""
+    """list shape: {'id': 7, 'user_id': 1, 'heading': 'New list 3', 'display_order': 0, 'created_at': '2019-11-19T16:08:10.440681', 'updated_at': '2019-11-19T16:08:10.440681'}"""
     list_id = list["id"]
-    return {"id": list_id, "heading": list["heading"], "toDos": []}
+    to_dos = to_dos_model.get_to_dos_by_list_id(list_id)
+    return {"id": list_id, "heading": list["heading"], "toDos": to_dos}

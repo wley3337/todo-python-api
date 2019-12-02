@@ -16,28 +16,42 @@ class User:
 def all_users():
     """Gets all users from DB"""
     db = db_connection.DBConnection()
-    db.cur.execute("""SELECT id, first_name, last_name, username FROM users""")
+    db.cur.execute(
+        """
+        SELECT row_to_json(u)
+            FROM( SELECT id, first_name, last_name, username FROM users)
+        u
+        """
+    )
     db_all_users = db.cur.fetchall()
     db.close()
     all_users = []
     for user in db_all_users:
-        all_users.append(serialize_user(user))
+        all_users.append(serialize_user(user[0]))
     return all_users
 
 
 def get_user_by_id(id):
     db = db_connection.DBConnection()
     # returns tuple
+#     select row_to_json(t)
+# from (
+#   select id, text from words
+# ) t
     db.cur.execute(
-        """SELECT id, first_name, last_name, username FROM users WHERE id = %s""", (id,))
+        """
+        SELECT row_to_json(u) 
+            FROM( SELECT id, first_name, last_name, username FROM users WHERE id = %s)
+        u
+        """, (id,))
     user = db.cur.fetchone()
     db.close()
     if user is None:
         return None
-    return serialize_user(user)
+    return serialize_user(user[0])
 
 
 def serialize_user(user):
-    user_id = user[0]
+    user_id = user["id"]
     user_lists = lists_model.get_users_lists_by_user_id(user_id)
-    return {"firstName": user[1], "lastName": user[2], "username": user[3], "lists": user_lists}
+    return {"firstName": user["first_name"], "lastName": user["last_name"], "username": user["username"], "lists": user_lists}
