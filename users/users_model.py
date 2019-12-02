@@ -33,11 +33,6 @@ def all_users():
 
 def get_user_by_id(id):
     db = db_connection.DBConnection()
-    # returns tuple
-#     select row_to_json(t)
-# from (
-#   select id, text from words
-# ) t
     db.cur.execute(
         """
         SELECT row_to_json(u) 
@@ -49,6 +44,21 @@ def get_user_by_id(id):
     if user is None:
         return None
     return serialize_user(user[0])
+
+
+def get_user_by_username(username):
+    db = db_connection.DBConnection()
+    db.cur.execute(
+        """
+        SELECT row_to_json(u) 
+            FROM( SELECT * FROM users WHERE username = %s LIMIT 1)
+        u
+        """, (username,))
+    user = db.cur.fetchone()
+    db.close()
+    if user is None:
+        return None
+    return user[0]
 
 
 def serialize_user(user):

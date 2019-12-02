@@ -1,4 +1,5 @@
 {
     "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.pythonPath": "/Users/willley/Desktop/CodingProjects/ToDo/backends/todo-python-api/venv/bin/python3.8"
 }

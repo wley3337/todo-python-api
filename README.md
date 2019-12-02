@@ -11,7 +11,8 @@ Docker setup and some of the API structure from [here](https://www.youtube.com/w
 
   ```
   import os
-
+  os.environ["FLASK_ENV"] = "TEST, DEV, or PROD"
+  os.environ["SECRET_KEY"] = "KEY_AS_STRING"
   os.environ["DB_DATABASE_DEV"]= "NAME_OF_YOUR_DEV_DB"
   os.environ["DB_DATABASE_TEST"]= "NAME_OF_YOUR_TEST_DB"
   # change for production
@@ -20,19 +21,22 @@ Docker setup and some of the API structure from [here](https://www.youtube.com/w
 
   **_For Docker_**
 
-- run `docker-compose build`
-- run `docker-compose up`
-- main entry point is `server.py`
+  - run `docker-compose build`
+  - run `docker-compose up`
+  - main entry point is `server.py`
 
-**_For Local DB_**
+  **_For Local DB_**
 
-- run `python server.py`
+  - `source venv/bin/activate` for venv
+  - run `python server.py`
 
 ## Dependencies:
 
 - flask
-- flask_restful
-- psycopg2
+- flask_restful [docs](https://flask-restful.readthedocs.io/en/latest/)
+- psycopg2 [docs](http://initd.org/psycopg/docs/) -- If you're having trouble installing this try: `pip install psycopg2-binary`
+- jwcrypto [docs](https://jwcrypto.readthedocs.io/en/latest/)
+- bcrypt [docs](https://pypi.org/project/bcrypt/)
 - marshmallow
 
 ## Structure of API
