@@ -1,1 +1,1 @@
-__all__ = ['controller', 'users_model']
+__all__ = ["users_controller", "create_user_account", "users_model"]
