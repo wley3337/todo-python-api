@@ -11,4 +11,7 @@ class UsersController(Resource):
 
 class UsersAutoLogin(Resource):
     def get(self):
-        return {"route": "users-auto-login"}
+        user = users_model.get_user_by_id(1)
+        if user is None:
+            return {"success": False, "errors": {"messages": ["User not found"]}}, 204
+        return {"success": True, "user": user}, 200

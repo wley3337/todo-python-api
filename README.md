@@ -2,10 +2,13 @@
 
 Docker setup and some of the API structure from [here](https://www.youtube.com/watch?v=4T5Gnrmzjak)
 
+[ SQL reference to prevent SQL Injection in Python ](https://realpython.com/prevent-python-sql-injection/)
+
 ## Setup
 
 - clone repo
   **_Create `env.py` file_**
+
   ```
   import os
 
@@ -14,7 +17,9 @@ Docker setup and some of the API structure from [here](https://www.youtube.com/w
   # change for production
   os.environ["DB_DATABASE_PROD"]= "NAME_OF_YOUR_PROD_DB"
   ```
+
   **_For Docker_**
+
 - run `docker-compose build`
 - run `docker-compose up`
 - main entry point is `server.py`
@@ -50,11 +55,12 @@ Docker setup and some of the API structure from [here](https://www.youtube.com/w
     }
   ```
 - POST `/login` - login user with { user: { :username, :password } } - returns:
-  ```
+
+  ````
   {
-  success: true/false,  
+  success: true/false,
    if true -->
-  {  
+  {
    user: {
   :firstName, :lastName, :username, lists: [ :id, :heading, :toDos [ :id, :listId, :title, :description, :due ] ]
   },
@@ -66,6 +72,7 @@ Docker setup and some of the API structure from [here](https://www.youtube.com/w
       ```
 
   <strong>- JWT Auth Routes -</strong>
+  ````
 
 <strong>Must have: <span>&nbsp;&nbsp;</span> `"authorization": "Bearer *token*"`</strong>
 
