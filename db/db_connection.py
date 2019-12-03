@@ -12,6 +12,7 @@ class DBConnection:
 
     def connect(self):
         if os.environ["FLASK_ENV"] == "TEST":
+            print("TEST DB")
             try:
                 self.con = psycopg2.connect(
                     dbname=os.environ["DB_DATABASE_TEST"]
@@ -19,6 +20,7 @@ class DBConnection:
             except (Exception, psycopg2.Error) as error:
                 print("Error while connecting to PostgreSQL", error)
         if os.environ["FLASK_ENV"] == "DEV":
+            print("DEV DB")
             try:
                 self.con = psycopg2.connect(
                     dbname=os.environ["DB_DATABASE_DEV"]
@@ -26,6 +28,7 @@ class DBConnection:
             except (Exception, psycopg2.Error) as error:
                 print("Error while connecting to PostgreSQL", error)
         if os.environ["FLASK_ENV"] == "PROD":
+            print("PROD DB")
             try:
                 self.con = psycopg2.connect(
                     dbname=os.environ["DB_DATABASE_PROD"]
