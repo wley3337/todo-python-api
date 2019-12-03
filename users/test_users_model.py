@@ -3,7 +3,10 @@ import pytest
 from db import db_connection
 from users import users_model
 import env
-
+# for mocking
+# from unittest.mock import patch
+#
+# @patch('package.module.method',  new=method_to_call_instead) <---no invocation
 
 # testing principle:
 # Arrange
