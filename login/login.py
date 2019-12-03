@@ -15,7 +15,7 @@ class Login(Resource):
             return {"success": False, "errors": {"messages": ["Wrong username or password"]}}
         elif user["password_digest"] and check_password(password, user["password_digest"]):
             auth_user = users_model.get_user_by_id(user["id"])
-            return {"route": "login", "user": auth_user}
+            return {"route": "login", "user": auth_user, "token": "some_token"}
         else:
             return {"success": False, "errors": {"messages": ["Wrong username or password"]}}
 

@@ -39,6 +39,10 @@ Docker setup and some of the API structure from [here](https://www.youtube.com/w
 - bcrypt [docs](https://pypi.org/project/bcrypt/)
 - marshmallow
 
+**_Testing_**
+
+- pytest [docs](https://docs.pytest.org/en/latest/)
+
 ## Structure of API
 
 <strong>Routes: </strong>
