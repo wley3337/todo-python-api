@@ -3,6 +3,7 @@
 Docker setup and some of the API structure from [here](https://www.youtube.com/watch?v=4T5Gnrmzjak)
 
 [ SQL reference to prevent SQL Injection in Python ](https://realpython.com/prevent-python-sql-injection/)
+[Good Video on using pytest](https://www.youtube.com/watch?v=etosV2IWBF0)
 
 ## Setup
 
