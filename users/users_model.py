@@ -1,7 +1,6 @@
 import os
 from config.db.db_connection import DBConnection
 from lists import lists_model
-# safe query construction cursor.execute("SELECT admin FROM users WHERE username = %s'", (username, ));
 
 os.environ["FLASK_ENV"] = "TEST"
 
@@ -14,24 +13,39 @@ class User:
         self.last_name = last_name
         self.username = username
         self.password_digest = password_digest
+        self.errors = {"messages": []}
+        self.status_code = 200
 
     def save(self):
-        print(os.environ["FLASK_ENV"])
-        # now needs logic to:
         # check if a user with that username already exists
+        if self.user_name_taken():
+            self.errors["messages"].append("Username is already taken")
+            self.status_code = 409
+            return False
         # save if does not
-        # return false
+        self.save_to_db()
+        # if save successful
         if hasattr(self, 'id'):
+            self.status_code = 201
             return True
+        # if save is unsuccessful
         else:
+            self.errors["messages"].append("DataBase Error, Please try again")
+            self.status_code = 500
             return False
 
     def to_json(self):
+        """
+        Serializes a User obj, returns False if no user id
+        """
         if self.id is None:
             return False
         return get_user_by_id(self.id)
 
     def save_to_db(self):
+        """
+        Saves User object to DB
+        """
         db = DBConnection()
         db.cur.execute(
             """
@@ -44,6 +58,21 @@ class User:
         # print("commit return: ", commit_return)
         self.id = new_user["id"]
         db.close()
+
+    def user_name_taken(self):
+        """
+        Checks DB for existing username returns True if a user exists with that username or False if not
+        """
+        db = DBConnection()
+        db.cur.execute(
+            """ SELECT * FROM users WHERE username = %s LIMIT 1""", (
+                self.username,)
+        )
+        existing_user = db.cur.fetchone()
+        print("username taken: ", existing_user)
+        if existing_user is None:
+            return False
+        return True
 
 
 def all_users():

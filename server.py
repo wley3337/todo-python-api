@@ -2,12 +2,14 @@ from flask import Flask
 from flask_restful import Api
 
 # Load ENV variables
-from config import env
+import config.env
 
-from users import users_controller, create_user_account
-from login import login
-from to_dos import to_dos_controller
-from lists import lists_controller
+from users.users_controller import UsersController, UsersAutoLogin
+from users.create_user_account import CreateUserAccount
+from login.login import Login
+from to_dos.to_dos_controller import ToDosController
+from lists.lists_controller import ListsController
+from util.jwt_handler import auth_decorator
 
 
 # create instance of flask
@@ -18,23 +20,25 @@ api = Api(app)
 
 # Routes need to be defined before server spins up
 # Open Routes
-api.add_resource(create_user_account.CreateUserAccount, '/create-user')
-api.add_resource(login.Login, '/login')
+api.add_resource(CreateUserAccount, '/create-user')
+api.add_resource(Login, '/login')
 
 # JWT Protected Routes
-api.add_resource(users_controller.UsersAutoLogin, '/users/show')
-api.add_resource(users_controller.UsersController, '/users')
-api.add_resource(lists_controller.ListsController, '/lists')
-api.add_resource(to_dos_controller.ToDos, '/to-dos')
+# @auth_decorator
+api.add_resource(UsersAutoLogin, '/users/show')
+
+api.add_resource(UsersController, '/users')
+api.add_resource(ListsController, '/lists')
+api.add_resource(ToDosController, '/to-dos')
 
 # Start server
 app.run(host="0.0.0.0", port=3000, debug=True)
 
 
-# Decorratior pattern for auth Routes
+# Decorator pattern for auth Routes
 # def auth_wrapper(func):
 #   def auth():
-#     if 1 + 1 == 2:
+#     if 1 + 2 == 2:
 #       func()
 #       return "authorized"
 #     else:

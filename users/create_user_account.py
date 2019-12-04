@@ -14,9 +14,9 @@ class CreateUserAccount(Resource):
         password_digest = create_password_digest(password).decode("utf-8")
         new_user = User(first_name, last_name, username, password_digest)
         if new_user.save():
-            return {"success": True, "route": "create_user_accout", "user": new_user.to_json()}
+            return {"success": True, "route": "create_user_accout", "user": new_user.to_json()}, new_user.status_code
         else:
-            return {"success": False, "route": "create_user_accout", "errors": {"messages": ["Username is already taken"]}}, 500
+            return {"success": False, "route": "create_user_accout", "errors": new_user.errors}, new_user.status_code
 
 
 def create_password_digest(password):
