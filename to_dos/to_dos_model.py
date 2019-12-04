@@ -1,4 +1,4 @@
-from db import db_connection
+from config.db.db_connection import DBConnection
 
 
 def serialize_to_do(to_do):
@@ -8,7 +8,7 @@ def serialize_to_do(to_do):
 
 
 def get_to_dos_by_list_id(list_id):
-    db = db_connection.DBConnection()
+    db = DBConnection()
     # returns a tuple with a dict index 0 with columns as keys
     db.cur.execute(
         """SELECT row_to_json(to_dos) FROM to_dos WHERE list_id = %s""", (list_id,)
@@ -25,7 +25,7 @@ def get_to_dos_by_list_id(list_id):
 
 
 def get_all_to_dos():
-    db = db_connection.DBConnection()
+    db = DBConnection()
     # returns a tuple with a dict index 0 with columns as keys
     db.cur.execute(
         """SELECT row_to_json(to_dos) FROM to_dos"""
@@ -41,7 +41,7 @@ def get_all_to_dos():
 
 
 def delete_to_do_by_id(to_do_id):
-    db = db_connection.DBConnection()
+    db = DBConnection()
     db.cur.execute(
         """DELETE FROM to_dos WHERE id = %s RETURNING id""", (to_do_id,)
     )

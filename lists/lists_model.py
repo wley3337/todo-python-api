@@ -1,9 +1,9 @@
-from db import db_connection
+from config.db.db_connection import DBConnection
 from to_dos import to_dos_model
 
 
 def get_users_lists_by_user_id(user_id):
-    db = db_connection.DBConnection()
+    db = DBConnection()
     # returns a tuple with a dict index 0 with columns as keys
     db.cur.execute(
         """SELECT row_to_json(lists) FROM lists WHERE user_id = %s""", (user_id,))

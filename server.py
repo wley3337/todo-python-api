@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restful import Api
 
 # Load ENV variables
-import env
+from config import env
 
 from users import users_controller, create_user_account
 from login import login
@@ -29,3 +29,23 @@ api.add_resource(to_dos_controller.ToDos, '/to-dos')
 
 # Start server
 app.run(host="0.0.0.0", port=3000, debug=True)
+
+
+# Decorratior pattern for auth Routes
+# def auth_wrapper(func):
+#   def auth():
+#     if 1 + 1 == 2:
+#       func()
+#       return "authorized"
+#     else:
+#       print("not authorized")
+#       return "this is returned"
+#   return auth
+
+
+# @auth_wrapper
+# def this():
+#   print("this should not print.")
+
+
+# print(this())

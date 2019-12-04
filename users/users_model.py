@@ -1,6 +1,6 @@
-from db.db_connection import DBConnection
-from lists import lists_model
 import os
+from config.db.db_connection import DBConnection
+from lists import lists_model
 # safe query construction cursor.execute("SELECT admin FROM users WHERE username = %s'", (username, ));
 
 os.environ["FLASK_ENV"] = "TEST"
