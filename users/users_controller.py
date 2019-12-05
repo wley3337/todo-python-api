@@ -2,9 +2,11 @@ import os
 import json
 from flask import request
 from flask_restful import Resource
+from functools import wraps
 import jwcrypto
 from jwcrypto import jwt, jwk
 from users import users_model
+from util.jwt_handler import auth_decorator, make_encrypted_token
 
 
 class UsersController(Resource):
@@ -23,35 +25,13 @@ class UsersController(Resource):
 # u'{"info":"I\'m a signed token"}'
 
 class UsersAutoLogin(Resource):
-    def get(self):
-        # print("key", key)
-        token = request.headers["Authorization"].split(" ")[1][:-1]
-        # token = make_encrypted_token()
-        print("token: ", token)
-        k = {"k": os.environ["SECRET_KEY"], "kty": "oct"}
-        key = jwk.JWK(**k)
-        print("key: ", key)
+    method_decorators = [auth_decorator]
 
-        njwt = jwt.JWT()
-        # ET = jwt.JWT(key=key, jwt=token)
-        # print("ET claims", ET.claims)
-        # results = jwt.JWT(key=key, jwt=ET.claims)
-        njwt.deserialize(key=key, jwt=token)
-        u = njwt.claims
-        # u = results.claims
-        print("Decrypted Token: ", u)
-
-        user = users_model.get_user_by_id(1)
+    def get(self, user_id):
+        """
+        user_id is passed from the auth_decorator on successful decoe of token. If not returns an error message that the user is not found.
+        """
+        user = users_model.get_user_by_id(user_id)
         if user is None:
-            return {"success": False, "errors": {"messages": ["User not found"]}}, 204
+            return {"success": False, "errors": {"messages": ["User not found"]}}, 200
         return {"success": True, "user": user}, 200
-
-
-def make_encrypted_token():
-    pL = {"user_id": 1}
-    k = {"k": os.environ["SECRET_KEY"], "kty": "oct"}
-    key = jwk.JWK(**k)
-    token = jwt.JWT(header={"alg": "HS256"},
-                    claims=pL)
-    token.make_signed_token(key)
-    return token.serialize()

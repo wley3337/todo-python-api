@@ -2,7 +2,7 @@ import os
 from config.db.db_connection import DBConnection
 from lists import lists_model
 
-os.environ["FLASK_ENV"] = "TEST"
+# os.environ["FLASK_ENV"] = "TEST"
 
 
 class User:
