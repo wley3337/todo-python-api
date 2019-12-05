@@ -2,10 +2,15 @@ import os
 from config.db.db_connection import DBConnection
 from lists import lists_model
 
-# os.environ["FLASK_ENV"] = "TEST"
+# os.environ["FLASK_gitENV"] = "TEST"
 
 
 class User:
+    """
+    A User requires:
+        first_name, last_name, username, password_digest (this should be a bcrypt generated digest)
+    """
+
     def __init__(self, first_name,
                  last_name, username,
                  password_digest):
@@ -17,6 +22,16 @@ class User:
         self.status_code = 200
 
     def save(self):
+        """
+        Checks to see if a username already exists in the database. 
+            If it does it returns false and adds:
+                self.errors["messages"].append("Username is already taken")
+                self.status_code = 409
+            If no user exists with username it returns true and sets self.status_code to 201
+            If there is a DB error it returns false and adds:
+                self.errors["messages"].append("DataBase Error, Please try again")
+                self.status_code = 500
+        """
         # check if a user with that username already exists
         if self.user_name_taken():
             self.errors["messages"].append("Username is already taken")

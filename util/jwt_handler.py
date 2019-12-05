@@ -30,7 +30,7 @@ def decrypt_token(token):
 
 def make_encrypted_token(payload):
     """
-    Creates a JWT Token (single encryption cycle) given a payload {'user_id': num}
+    Creates a JWT Token (single encryption cycle) given a payload {'user_id': int}
     """
     key = gen_key()
     token = jwt.JWT(header={"alg": "HS256"},
