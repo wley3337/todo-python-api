@@ -6,6 +6,9 @@ from jwcrypto import jwt, jwk
 
 
 def auth_decorator(func):
+    """
+    main entry point for decoding a JWT token and providing a user_id as int to the existing route
+    """
     @wraps(func)
     def wrapper(*args, **kwargs):
         token = request.headers["Authorization"].split(" ")[1][:-1]
