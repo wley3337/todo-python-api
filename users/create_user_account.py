@@ -17,8 +17,8 @@ class CreateUserAccount(Resource):
                return {"success": False, "route": "create_user_accout", "errors": new_user.errors}, new_user.status_code
         """
         r_body = request.get_json()
-        first_name = r_body["user"]["first_name"]
-        last_name = r_body["user"]["last_name"]
+        first_name = r_body["user"]["firstName"]
+        last_name = r_body["user"]["lastName"]
         username = r_body["user"]["username"]
         password = r_body["user"]["password"]
         password_digest = create_password_digest(password).decode("utf-8")

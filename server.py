@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restful import Api
+from flask_cors import CORS
 
 # Load ENV variables
 import config.env
@@ -14,7 +15,8 @@ from util.jwt_handler import auth_decorator
 
 # create instance of flask
 app = Flask(__name__)
-
+# CORS(app, support_credentials=True)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 # create the API with app from flask_restful
 api = Api(app)
 

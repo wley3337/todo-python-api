@@ -36,6 +36,7 @@ Docker setup and some of the API structure from [here](https://www.youtube.com/w
 
 - flask
 - flask_restful [docs](https://flask-restful.readthedocs.io/en/latest/)
+- flask-cors [docs](https://pypi.org/project/Flask-Cors/)
 - psycopg2 [docs](http://initd.org/psycopg/docs/) -- If you're having trouble installing this try: `pip install psycopg2-binary`
 - jwcrypto [docs](https://jwcrypto.readthedocs.io/en/latest/)
 - bcrypt [docs](https://pypi.org/project/bcrypt/)

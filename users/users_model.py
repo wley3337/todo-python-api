@@ -144,4 +144,5 @@ def serialize_user(user):
     """Serializes a JSON user object for ToDo Rails Frontend"""
     user_id = user["id"]
     user_lists = lists_model.get_users_lists_by_user_id(user_id)
-    return {"firstName": user["first_name"], "lastName": user["last_name"], "username": user["username"], "lists": user_lists}
+
+    return {"user": {"firstName": user["first_name"], "lastName": user["last_name"], "username": user["username"]}, "lists": user_lists}

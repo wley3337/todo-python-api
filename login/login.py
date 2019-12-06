@@ -3,11 +3,13 @@ from flask import request
 from flask_restful import Resource
 import bcrypt
 from users import users_model
+from util.jwt_handler import make_encrypted_token
 
 
 class Login(Resource):
     def post(self):
         r_body = request.get_json()
+        print(r_body)
         username = r_body["user"]["username"]
         password = r_body["user"]["password"]
         user = users_model.get_user_by_username(username)
@@ -15,7 +17,9 @@ class Login(Resource):
             return {"success": False, "errors": {"messages": ["Wrong username or password"]}}
         elif user["password_digest"] and check_password(password, user["password_digest"]):
             auth_user = users_model.get_user_by_id(user["id"])
-            return {"route": "login", "user": auth_user, "token": "some_token"}
+            token = make_encrypted_token({"user_id": user["id"]})
+            print("authUser: ", auth_user)
+            return {"success": True, "user": auth_user, "token": token}
         else:
             return {"success": False, "errors": {"messages": ["Wrong username or password"]}}
 
