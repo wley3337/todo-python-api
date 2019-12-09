@@ -1,8 +1,9 @@
 import os
 import ast
+import pdb
 from flask import request
 from functools import wraps
-from jwcrypto import jwt, jwk
+from jwcrypto import jwt, jwk, common
 
 
 def auth_decorator(func):
@@ -11,7 +12,7 @@ def auth_decorator(func):
     """
     @wraps(func)
     def wrapper(*args, **kwargs):
-        token = request.headers["Authorization"].split(" ")[1][:-1]
+        token = request.headers["Authorization"].split(" ")[1]
         d_token = decrypt_token(token)
         user_id = d_token["user_id"]
         return func(*args, **kwargs, user_id=user_id)
@@ -22,9 +23,12 @@ def decrypt_token(token):
     """
     Decrypts a JWT token (single encryption cycle) returns a dict
     """
+    print("Token from front: ", token)
     key = gen_key()
     new_jwt = jwt.JWT()
-    new_jwt.deserialize(key=key, jwt=token)
+    new_jwt.deserialize(token, key)
+    print("new_jwt", new_jwt)
+    print("new_jwt claims: ", ast.literal_eval(new_jwt.claims))
     return ast.literal_eval(new_jwt.claims)
 
 
@@ -43,5 +47,5 @@ def gen_key():
     """
     Creates a JWT Key obj for encryption
     """
-    k = {"k": os.environ["SECRET_KEY"], "kty": "oct"}
+    k = {"k": common.base64url_encode(os.environ["SECRET_KEY"]), "kty": "oct"}
     return jwk.JWK(**k)
