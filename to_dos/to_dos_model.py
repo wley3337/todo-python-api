@@ -45,9 +45,9 @@ def delete_to_do_by_id(to_do_id):
     db.cur.execute(
         """DELETE FROM to_dos WHERE id = %s RETURNING id""", (to_do_id,)
     )
-    deleted_to_dos = db.cur.fetchone()
+    deleted_to_dos = db.cur.fetchone()[0]
     print("Post DB ToDoId: ", deleted_to_dos)
     db.close()
-    if to_do_id == int(deleted_to_dos["id"]):
+    if to_do_id == int(deleted_to_dos):
         return {"toDoId": deleted_to_dos}
     return {"success": False, "errors": {"messages": ['ToDo was not deleted']}}

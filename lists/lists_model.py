@@ -1,8 +1,8 @@
 from config.db.db_connection import DBConnection
-from to_dos import to_dos_model
+from to_dos.to_dos_model import delete_to_do_by_id, get_to_dos_by_list_id
 from config.db.db_connection import DBConnection
 
-
+import pdb
 # export interface ListSchemaType{
 #     id: string
 #     user_id: number
@@ -95,11 +95,14 @@ def serialize_list_by_id(list_id):
 def serialize_list(list):
     """list shape: {'id': 7, 'user_id': 1, 'heading': 'New list 3', 'display_order': 0, 'created_at': '2019-11-19T16:08:10.440681', 'updated_at': '2019-11-19T16:08:10.440681'}"""
     list_id = list["id"]
-    to_dos = to_dos_model.get_to_dos_by_list_id(list_id)
+    to_dos = get_to_dos_by_list_id(list_id)
     return {"id": list_id, "heading": list["heading"], "toDos": to_dos}
 
 
 def delete_list_by_id(list_id):
+    # delete all to_dos from list
+    delete_all_list_to_dos(list_id)
+    # delete list
     db = DBConnection()
     db.cur.execute(
         """
@@ -107,3 +110,9 @@ def delete_list_by_id(list_id):
         """, (list_id,)
     )
     db.con.commit()
+
+
+def delete_all_list_to_dos(list_id):
+    to_dos = get_to_dos_by_list_id(list_id)
+    for to_do in to_dos:
+        delete_to_do_by_id(to_do["id"])
