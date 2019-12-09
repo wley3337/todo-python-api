@@ -84,7 +84,6 @@ class User:
                 self.username,)
         )
         existing_user = db.cur.fetchone()
-        print("username taken: ", existing_user)
         if existing_user is None:
             return False
         return True
@@ -141,7 +140,7 @@ def get_user_by_username(username):
 
 
 def serialize_user(user):
-    """Serializes a JSON user object for ToDo Rails Frontend"""
+    """Serializes a JSON user object for ToDo React Frontend"""
     user_id = user["id"]
     user_lists = lists_model.get_users_lists_by_user_id(user_id)
 

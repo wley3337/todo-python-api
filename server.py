@@ -30,8 +30,8 @@ api.add_resource(Login, '/login')
 api.add_resource(UsersAutoLogin, '/users/show')
 
 api.add_resource(UsersController, '/users')
-api.add_resource(ListsController, '/lists')
-api.add_resource(ToDosController, '/to-dos')
+api.add_resource(ListsController, '/lists',  '/lists/<int:list_id>')
+api.add_resource(ToDosController, '/to-dos', '/to-dos/<int:to_do_id>')
 
 # Start server
 app.run(host="0.0.0.0", port=3000, debug=True)

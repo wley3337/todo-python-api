@@ -1,6 +1,5 @@
 import os
 import ast
-import pdb
 from flask import request
 from functools import wraps
 from jwcrypto import jwt, jwk, common
@@ -23,12 +22,9 @@ def decrypt_token(token):
     """
     Decrypts a JWT token (single encryption cycle) returns a dict
     """
-    print("Token from front: ", token)
     key = gen_key()
     new_jwt = jwt.JWT()
     new_jwt.deserialize(token, key)
-    print("new_jwt", new_jwt)
-    print("new_jwt claims: ", ast.literal_eval(new_jwt.claims))
     return ast.literal_eval(new_jwt.claims)
 
 
