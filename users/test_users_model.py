@@ -34,7 +34,7 @@ class TestUserModels:
         Test able to get a user by user['id']
         """
         user = users_model.get_user_by_id(user_for_test["id"])
-        assert user["firstName"] == "testFirstName"
+        assert user["user"]["firstName"] == "testFirstName"
 
     def test_serialize_user(self, db_setup):
         """
@@ -44,4 +44,4 @@ class TestUserModels:
                      "last_name": 'testLastName', "username": 'test123'}
         serialized_test_user = users_model.serialize_user(test_user)
         assert serialized_test_user["lists"] == []
-        assert serialized_test_user["lastName"] == "testLastName"
+        assert serialized_test_user["user"]["lastName"] == "testLastName"

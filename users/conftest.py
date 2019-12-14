@@ -14,6 +14,8 @@ def db_setup(request):
     """
     os.environ["FLASK_ENV"] = "TEST"
     db = DBConnection()
+    db.cur.execute('DELETE FROM users')
+    db.con.commit()
     # create test user
     db.cur.execute('INSERT INTO users(first_name, last_name, username, password_digest, created_at, updated_at) VALUES(%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING *',
                    ('testFirstName', 'testLastName', 'test123', "1"))
